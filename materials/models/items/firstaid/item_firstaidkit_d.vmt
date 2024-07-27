@@ -1,0 +1,6 @@
+"vertexlitgeneric"
+{
+	"$basetexture" "models\items\firstaid\item_firstaidkit_d"
+	"$envmap" env_cubemap
+	"$envmapmask" "models\items\firstaid\item_firstaidkit_s"
+}

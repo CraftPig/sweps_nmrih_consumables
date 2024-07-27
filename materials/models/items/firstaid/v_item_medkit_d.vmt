@@ -1,0 +1,8 @@
+"vertexlitgeneric"
+{
+	"$basetexture" "models\items\firstaid\v_item_medkit_d"
+    "$bumpmap" "models\items\firstaid\v_item_medkit_n"
+	
+	
+$surfaceprop "metal"
+}
