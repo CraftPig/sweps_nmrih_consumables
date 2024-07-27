@@ -1,6 +1,6 @@
 # consumables_nmrih_standalone
  
- Workshop Page: [NMRIH Consumables Standalone | Steam Workshop](https://steamcommunity.com/sharedfiles/filedetails/?id=3297936273)
+ Workshop Page: [NMRIH Consumables Standalone](https://steamcommunity.com/sharedfiles/filedetails/?id=3297936273)
 
  Credits
   - Reworked Viewmodels: S0kk0
