@@ -21,7 +21,7 @@ SWEP.DrawAmmo = true
 SWEP.DrawCrosshair = false 
 SWEP.UseHands = true
 
-SWEP.Primary.Ammo = "nmrih_genetherapy_consumable_ammo"
+SWEP.Primary.Ammo = "nmrih_genetherapy"
 SWEP.Primary.ClipSize = -1
 SWEP.Primary.DefaultClip = 1
 SWEP.Primary.Automatic = false
@@ -42,6 +42,12 @@ local SecondaryAttacking = false
 
 function SWEP:Initialize()
     self:SetHoldType("pistol")
+	
+	IsInfectiousZombieAddonMounted = false
+	
+	if xdeif_Cure then
+	    IsInfectiousZombieAddonMounted = true
+	end
 end  
 
 function SWEP:Deploy()
@@ -123,9 +129,17 @@ function HealGeneNMRIH(ent, self)
 	
 	if IsValid(self) then
         if ( IsValid( ent ) && SERVER ) and activeWeapon:GetClass() == "nmrih_genetherapy_consumable" then
-		    ent:SetHealth(math.min(ent:GetMaxHealth(), ent:Health() + HealAmount))
-		    ent:SetArmor(math.min(ent:GetMaxArmor(), ent:Armor() + ArmorAmount))
-			ent:RemoveAmmo(1, "nmrih_genetherapy_consumable_ammo")
+		    if GetConVar("convar_consumablesnmrih_earmor"):GetBool() then
+		        ent:SetHealth(math.min(ent:GetMaxHealth(), ent:Health() + HealAmount))
+		        ent:SetArmor(math.min(ent:GetMaxArmor(), ent:Armor() + ArmorAmount))
+			    ent:RemoveAmmo(1, "nmrih_genetherapy")
+			end
+			
+			if IsInfectiousZombieAddonMounted == true and GetConVar("convar_consumablesnmrih_ecureinf"):GetBool() then
+			    vacc = 1
+			    xdeif_NeedleHit( ent, vial, self )
+			    xdeif_Cure( ent, vacc, incu )
+			end
 		
 		    self:Deploy()
         end

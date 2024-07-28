@@ -21,7 +21,7 @@ SWEP.DrawAmmo = true
 SWEP.DrawCrosshair = false 
 SWEP.UseHands = true
 
-SWEP.Primary.Ammo = "nmrih_phanlax_consumable_ammo"
+SWEP.Primary.Ammo = "nmrih_phanlax"
 SWEP.Primary.ClipSize = -1
 SWEP.Primary.DefaultClip = 1
 SWEP.Primary.Automatic = false
@@ -44,6 +44,12 @@ local SecondaryAttacking = false
 
 function SWEP:Initialize()
     self:SetHoldType("pistol")
+	
+	IsInfectiousZombieAddonMounted = false
+	
+	if xdeif_Cure then
+	    IsInfectiousZombieAddonMounted = true
+	end
 end  
 
 function SWEP:Deploy()
@@ -115,8 +121,11 @@ function SWEP:PrimaryAttack()
         self:SendWeaponAnim(ACT_VM_PRIMARYATTACK)
 	
 	    timer.Create("ConsumeTimerPhalanxNMRIH", HealTime, 1, function()
-            self:RegenerateHealthNMRIH()
+            
 			HealPhalanxNMRIH(ent, self)		
+			if IsValid(self) and IsValid(owner) and owner:IsPlayer() and owner:Alive() then
+			   self:RegenerateHealthNMRIH(ent, owner)
+			end
         end)	
 	end
 end
@@ -128,18 +137,23 @@ function HealPhalanxNMRIH(ent, self)
         if ( IsValid( ent ) && SERVER ) and activeWeapon:GetClass() == "nmrih_phalanx_consumable" then
 		    ent:SetHealth(math.min(ent:GetMaxHealth(), ent:Health() + HealAmount))
 		    ent:SetArmor(math.min(ent:GetMaxArmor(), ent:Armor() + ArmorAmount))
+	
+	        if IsInfectiousZombieAddonMounted == true and GetConVar("convar_consumablesnmrih_edelayinf"):GetBool() then
+			    xdeif_Cure( ent, vacc, incu )
+			end
 			
-			ent:RemoveAmmo(1, "nmrih_phanlax_consumable_ammo")
+			ent:RemoveAmmo(1, "nmrih_phanlax")
 		
 		    self:Deploy()
+			
         end
 	end
 end
 
-function SWEP:RegenerateHealthNMRIH()
-    local owner = self:GetOwner()
-    
-    local regenTimer = timer.Create("HealthRegenTimerNMRIH", 0.5, RegenDuration, function()
+
+function SWEP:RegenerateHealthNMRIH(ent, owner)
+    if not GetConVar("convar_consumablesnmrih_eregen"):GetBool() then return end
+    timer.Create("HealthRegenTimerNMRIH", 0.5, RegenDuration, function()
         if IsValid(owner) and owner:Alive() then
             owner:SetHealth(math.min(owner:Health() + RegenAmount, owner:GetMaxHealth()))
         else

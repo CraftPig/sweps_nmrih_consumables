@@ -1,9 +1,86 @@
 AddCSLuaFile()
 
----- Other
+--[[
+-----------------------------------------------------------------------------------------------------
+Convar Tables
+-----------------------------------------------------------------------------------------------------
+]]
 
------------------------------------------------------------------------------------------ Other
+if CLIENT then
+    hook.Add("PopulateToolMenu", "ToolMenu_NMRIHConsumables", function()
+		spawnmenu.AddToolMenuOption("Options", "Craft_Pig", "ToolMenuOption_ConsumablesNMRIH", "NMRIH Consumables", "", "", function(panel)
+			panel:ClearControls()
+			panel:CheckBox("Enable Phalanx Regen?", "convar_consumablesnmrih_eregen", 1, 0, true)
+			panel:CheckBox("Enable Phalanx Cure?", "convar_consumablesnmrih_edelayinf", 1, 0, true)
+			panel:ControlHelp("Requires Infectious Mod to be mounted.")
+			panel:CheckBox("Enable Genetherapy Armor?", "convar_consumablesnmrih_earmor", 1, 0, true)
+			panel:CheckBox("Enable Genetherapy Cure?", "convar_consumablesnmrih_ecureinf", 1, 0, true)
+			panel:ControlHelp("Requires Infectious Mod to be mounted.")
+		end)
+	end)
+end
 
+CreateConVar("convar_consumablesnmrih_eregen", "1", {FCVAR_ARCHIVE}, "Enable Phalanx Regen (0 - disabled, 1 - enabled)")
+CreateConVar("convar_consumablesnmrih_edelayinf", "1", {FCVAR_ARCHIVE}, "Enable Phalanx Cure (0 - disabled, 1 - enabled)")
+CreateConVar("convar_consumablesnmrih_earmor", "1", {FCVAR_ARCHIVE}, "Enable Phalanx Regen (0 - disabled, 1 - enabled)")
+CreateConVar("convar_consumablesnmrih_ecureinf", "1", {FCVAR_ARCHIVE}, "Enable Phalanx Regen (0 - disabled, 1 - enabled)")
+
+
+--[[
+-----------------------------------------------------------------------------------------------------
+Ammo Tables
+-----------------------------------------------------------------------------------------------------
+]]
+
+game.AddAmmoType( {
+name = "nmrih_phanlax",
+dmgtype = DMG_BULLET,
+tracer = TRACER_LINE,
+plydmg = 0,
+npcdmg = 0,
+force = 1,
+minsplash = 1,
+maxsplash = 1
+} )
+
+game.AddAmmoType( {
+name = "nmrih_medkit",
+dmgtype = DMG_BULLET,
+tracer = TRACER_LINE,
+plydmg = 0,
+npcdmg = 0,
+force = 1,
+minsplash = 1,
+maxsplash = 1
+} ) 
+
+game.AddAmmoType( {
+name = "nmrih_genetherapy",
+dmgtype = DMG_BULLET,
+tracer = TRACER_LINE,
+plydmg = 0,
+npcdmg = 0,
+force = 1,
+minsplash = 1,
+maxsplash = 1
+} )
+
+game.AddAmmoType( {
+name = "nmrih_bandage",
+dmgtype = DMG_BULLET,
+tracer = TRACER_LINE,
+plydmg = 0,
+npcdmg = 0,
+force = 1,
+minsplash = 1,
+maxsplash = 1
+} )
+
+--[[
+-----------------------------------------------------------------------------------------------------
+Sound Tables
+-----------------------------------------------------------------------------------------------------
+]]
 sound.Add( {
     name = "nmrih_consumables_shove",
     channel = CHAN_WEAPON,

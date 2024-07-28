@@ -21,7 +21,7 @@ SWEP.DrawAmmo = true
 SWEP.DrawCrosshair = false 
 SWEP.UseHands = true
 
-SWEP.Primary.Ammo = "nmrih_bandage_consumable_ammo"
+SWEP.Primary.Ammo = "nmrih_bandage"
 SWEP.Primary.ClipSize = -1
 SWEP.Primary.DefaultClip = 1
 SWEP.Primary.Automatic = false
@@ -125,7 +125,7 @@ function HealBandageNMRIH(ent, self)
         if ( IsValid( ent ) && SERVER ) and activeWeapon:GetClass() == "nmrih_bandage_consumable" then
 		    ent:SetHealth(math.min(ent:GetMaxHealth(), ent:Health() + HealAmount))
 		    ent:SetArmor(math.min(ent:GetMaxArmor(), ent:Armor() + ArmorAmount))
-			ent:RemoveAmmo(1, "nmrih_bandage_consumable_ammo")
+			ent:RemoveAmmo(1, "nmrih_bandage")
 		
 		    self:Deploy()
         end

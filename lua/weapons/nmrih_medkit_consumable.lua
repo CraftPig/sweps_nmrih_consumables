@@ -21,7 +21,7 @@ SWEP.DrawAmmo = true
 SWEP.DrawCrosshair = false 
 SWEP.UseHands = true
 
-SWEP.Primary.Ammo = "nmrih_medkit_consumable_ammo"
+SWEP.Primary.Ammo = "nmrih_medkit"
 SWEP.Primary.ClipSize = -1
 SWEP.Primary.DefaultClip = 1
 SWEP.Primary.Automatic = false
@@ -60,7 +60,7 @@ function SWEP:Deploy()
 	self.Sprint = 0
 	self.Consume = 0
 	self.Attack = 0
-	timer.Remove( "nmrih_medkit_consumable_ammo" )
+	timer.Remove( "nmrih_medkit" )
 end
 
 function SWEP:Think()
@@ -125,7 +125,7 @@ function HealMedkitNMRIH(ent, self)
         if ( IsValid( ent ) && SERVER ) and activeWeapon:GetClass() == "nmrih_medkit_consumable" then
 		    ent:SetHealth(math.min(ent:GetMaxHealth(), ent:Health() + HealAmount))
 		    ent:SetArmor(math.min(ent:GetMaxArmor(), ent:Armor() + ArmorAmount))
-			ent:RemoveAmmo(1, "nmrih_medkit_consumable_ammo")
+			ent:RemoveAmmo(1, "nmrih_medkit")
 		
 		    self:Deploy()
         end
